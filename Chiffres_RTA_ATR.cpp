@@ -9,19 +9,26 @@ const int   size_lt = (sizeof(values)/sizeof(int))-1;
 
 int convert_to_letters(int, char*);
 int convert_to_value(char*, int*);
+int convert_date(char*, char*, char);
 
 int main() {
   int input_a        = 1287;
   char output_a[256] = { 0 };
   
   int output_b       = 0;
-  char input_b[]    = "MCMXCV";
+  char input_b[]     = "MCMXCV";
+  
+  char input_c[]     = "MCMXCV-II-VII";
+  char output_c[256] = { 0 };
   
   convert_to_letters(input_a,output_a);
   printf("Chiffre romains: %s\n",output_a);
   
   convert_to_value(input_b,&output_b);
   printf("Chiffre arabes : %d\n",output_b);
+  
+  convert_date(input_c,output_c,'a');
+  printf("Date arabes    : %s\n",output_c);
 }
 
 int convert_to_letters(int in, char* out) {
@@ -52,4 +59,26 @@ int convert_to_value(char* in, int* out) {
     }
   } while(*in); // tant qu'on atteint pas la fin de la chaine -> \0
   return 0;
+}
+
+int convert_date(char* in, char* out, char sens) {
+  char* pch;
+  
+  if (sens == 'a') {
+    int tmp = 0, offset = 0;;
+    pch = strtok (in," -/"); // recherche le premier caractère parmit les séparateurs
+    while (pch != NULL)
+    {
+      convert_to_value(pch,&tmp); // on converti le premier bout de chaine en nombre
+      offset += snprintf(out+offset,64-offset,"%02d ", tmp); // on créé la chaine, le snprintf retourne la longueur de la chaine
+      tmp = 0; // on reset la valeur de la convertion
+      pch = strtok (NULL, " ,.-"); // on recherche le prochain bout de chaine
+      
+    }
+    return 0;
+  } else if (sens == 'r') {
+    return 0;
+  } else {
+    return -1;
+  }
 }
