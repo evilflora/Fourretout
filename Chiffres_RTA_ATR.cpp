@@ -1,11 +1,6 @@
 #include <iostream>
 #include <cstring>
 
-/*
-* Conversion des chiffres arabes en romain
-* Conversion des chiffres romains en arabe
-*/
-
 using namespace std;
 
 const int   values[] = {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
@@ -34,27 +29,26 @@ int convert_to_letters(int in, char* out) {
   if (in < 0 || in > 9999) return -1;
   while(in > 0) // tant que sa valeur est > 0
   {
-    if ((in - values[i]) >= 0) {
-      strncpy(out,letters[i],strlen(letters[i]));
-      out+=strlen(letters[i]);
-      in -= values[i];
+    if ((in - values[i]) >= 0) { // on verifie qu'on peut soustraire notre valeur
+      strncpy(out,letters[i],strlen(letters[i])); // on copie le chiffre romain dans la chaine
+      out+=strlen(letters[i]); // on déplace le curseur dans la chaine
+      in -= values[i]; // on soustrait notre valeur
     } else {
-        i--;
+        i--; // on passe à notre index suivant, change de valeur et de chiffre romain
     }
   }
   return 0;
 }
 
-
 int convert_to_value(char* in, int* out) {
   int i = size_lt;
   do
   {
-    if (strncmp(in,letters[i],strlen(letters[i])) == 0) {
-      *out += values[i];
-      in += strlen(letters[i]);
+    if (strncmp(in,letters[i],strlen(letters[i])) == 0) { // on compare le chiffre romain de la chaine à ceux qu'on connait
+      *out += values[i]; // on augmente notre valeur de la valeur arabe du chiffre romain
+      in += strlen(letters[i]); // on se déplace dans la chaine de lecture de la longueur du chiffre romain
     } else {
-      i--;
+      i--; // on passe à notre index suivant, change de valeur et de chiffre romain
     }
   } while(*in); // tant qu'on atteint pas la fin de la chaine -> \0
   return 0;
