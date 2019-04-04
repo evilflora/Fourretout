@@ -1,6 +1,11 @@
 #include <iostream>
 #include <cstring>
 
+/*
+* Conversion des chiffres arabes en romain
+* Conversion des chiffres romains en arabe
+*/
+
 using namespace std;
 
 const int   values[] = {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
